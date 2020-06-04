@@ -21,17 +21,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/bookstore/comment")
 public class CommentController {
-
-    @Autowired
-    private CommentService commentService;
-
-    @GetMapping("/test/{id}")
-    @ApiOperation("获取一个评论")
-    public Comment getOneComment(int Commentid){
-        Comment comment =commentService.getById(Commentid);
-        System.out.println(comment);
-        return comment;
-    }
-
 }
 
