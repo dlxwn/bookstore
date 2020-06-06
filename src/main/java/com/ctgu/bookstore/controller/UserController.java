@@ -3,6 +3,7 @@ package com.ctgu.bookstore.controller;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.segments.MergeSegments;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ctgu.bookstore.entity.User;
 import com.ctgu.bookstore.mapper.UserMapper;
 import com.ctgu.bookstore.service.UserService;
@@ -31,6 +32,18 @@ public class UserController {
        return userService.getById(id);
     }
 
+    @GetMapping("/findAll/{page}/{size}")
+    @ApiOperation("查找所有用户，实现分页")
+    public IPage<User> getAll(@PathVariable("page") int page, @PathVariable("size") int size){
+        return userService.getAll(page,size);
+    }
+
+    @PostMapping("/findByRequest")
+    @ApiOperation("条件查询，实现分页，默认从第一页显示，每页显示10条记录")
+    public IPage<User> getAllByRequest(@RequestBody User query){
+        return userService.getAllByRequest(query);
+    }
+
     @GetMapping("/findList/{field}")
     @ApiOperation("字段模糊查询")
     public List<User> getListUserByFuzzy(@PathVariable("field") String field){
@@ -45,7 +58,7 @@ public class UserController {
 
     @DeleteMapping("/del/{id}")
     @ApiOperation("删除用户")
-    public Boolean edit(@PathVariable("id") int id) {
+    public Boolean delUser(@PathVariable("id") int id) {
         return userService.removeById(id);
     }
 
