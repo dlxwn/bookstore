@@ -1,5 +1,7 @@
 package com.ctgu.bookstore.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ctgu.bookstore.entity.Orderlist;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -17,4 +19,6 @@ public interface OrderlistService extends IService<Orderlist> {
 
 
     List<Orderlist> getListByFuzzy(String fuzzy);
+
+    IPage<Orderlist> getAll(int page, int size);
 }

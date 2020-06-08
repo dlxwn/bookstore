@@ -1,6 +1,8 @@
 package com.ctgu.bookstore.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ctgu.bookstore.entity.Orderlist;
 import com.ctgu.bookstore.mapper.OrderlistMapper;
 import com.ctgu.bookstore.service.OrderlistService;
@@ -32,4 +34,11 @@ public class OrderlistServiceImpl extends ServiceImpl<OrderlistMapper, Orderlist
         List<Orderlist> order = orderlistMapper.selectList(qw);
         return order;
     }
+
+    @Override
+    public IPage<Orderlist> getAll(int page, int size) {
+        IPage<Orderlist> orderIPage = orderlistMapper.selectPage(new Page<>(page,size), null);
+        return orderIPage;
+    }
+
 }

@@ -1,6 +1,8 @@
 package com.ctgu.bookstore.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ctgu.bookstore.entity.Orderlist;
 import com.ctgu.bookstore.service.OrderlistService;
 import io.swagger.annotations.ApiOperation;
@@ -18,6 +20,7 @@ import java.util.List;
  * @author wby
  * @since 2020-06-03
  */
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/bookstore/orderlist")
 public class OrderlistController {
@@ -50,11 +53,10 @@ public class OrderlistController {
         return oneOrder;
     }
 
-    @GetMapping("/selectAll")
-    @ApiOperation("显示所有订单")
-    public List<Orderlist> selectAllOrderlist(){
-        List<Orderlist> allOrderlist = orderlistService.list(null);
-        return allOrderlist;
+    @GetMapping("/selectAll/{page}/{size}")
+    @ApiOperation("显示所有订单，并分页显示")
+    public IPage<Orderlist> selectAllOrderlist(@PathVariable("page")int page, @PathVariable("size")int size){
+        return orderlistService.getAll(page,size);
     }
 
     @GetMapping("/selectList/{condition}")
