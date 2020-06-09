@@ -2,4 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ctgu.bookstore.mapper.BookMapper">
 
+<!--    <select id="selectBookPage" resultType="com.ctgu.bookstore.entity.Book">-->
+<!--        select * from book ${ew.customSqlSegment}-->
+<!--    </select>-->
 </mapper>
