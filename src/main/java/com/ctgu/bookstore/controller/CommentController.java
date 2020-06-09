@@ -15,23 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
  *  前端控制器
  * </p>
  *
- * @author xuzhen
+ * @author Nidol
  * @since 2020-06-03
  */
 @RestController
 @RequestMapping("/bookstore/comment")
 public class CommentController {
-
-    @Autowired
-    private CommentService commentService;
-
-    @GetMapping("/test/{id}")
-    @ApiOperation("获取一个评论")
-    public Comment getOneComment(int Commentid){
-        Comment comment =commentService.getById(Commentid);
-        System.out.println(comment);
-        return comment;
-    }
 
 }
 

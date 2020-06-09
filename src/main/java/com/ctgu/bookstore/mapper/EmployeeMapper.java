@@ -8,9 +8,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  *  Mapper 接口
  * </p>
  *
- * @author xuzhen
+ * @author Nidol
  * @since 2020-06-03
  */
 public interface EmployeeMapper extends BaseMapper<Employee> {
+
 
 }
