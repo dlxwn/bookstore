@@ -6,6 +6,7 @@ import com.ctgu.bookstore.service.CommentService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +28,7 @@ public class CommentController {
 
     @GetMapping("/test/{id}")
     @ApiOperation("获取一个评论")
-    public Comment getOneComment(int Commentid){
+    public Comment getOneComment(@PathVariable("id") int Commentid){
         Comment comment =commentService.getById(Commentid);
         System.out.println(comment);
         return comment;
