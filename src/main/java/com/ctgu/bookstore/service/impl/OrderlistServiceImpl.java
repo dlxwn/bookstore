@@ -26,13 +26,14 @@ public class OrderlistServiceImpl extends ServiceImpl<OrderlistMapper, Orderlist
     @Autowired
     private OrderlistMapper orderlistMapper;
     @Override
-    public List<Orderlist> getListByFuzzy(String fuzzy) {
+    public IPage<Orderlist> getListByFuzzy(String fuzzy, int page ,int size) {
         QueryWrapper<Orderlist> qw = new QueryWrapper<>();
         qw.like("order_address", fuzzy).or()
                 .like("order_tel", fuzzy).or()
                 .like("order_name", fuzzy);
         List<Orderlist> order = orderlistMapper.selectList(qw);
-        return order;
+        IPage<Orderlist> orderIPage = orderlistMapper.selectPage(new Page<>(page,size), qw);
+        return orderIPage;
     }
 
     @Override

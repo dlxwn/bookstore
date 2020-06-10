@@ -2,12 +2,12 @@ package com.ctgu.bookstore.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ctgu.bookstore.entity.Orderlist;
+import com.ctgu.bookstore.entity.Result;
 import com.ctgu.bookstore.service.OrderlistService;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,18 +30,22 @@ public class OrderlistController {
 
     @DeleteMapping("/delete/{id}")
     @ApiOperation("删除一个订单")
-    public Boolean deleteOrderlist(@PathVariable("id") int orderId){
-        Boolean res = orderlistService.removeById(orderId);
+    public Result deleteOrderlist(@PathVariable("id") int orderId){
+        Result res = new Result();
+        orderlistService.removeById(orderId);
+        res.setCode(1);
         return res;
     }
 
     @PutMapping("/update/{id}")
     @ApiOperation("订单审核，使订单状态变为true")
-    public Boolean updateOrderlist(@PathVariable("id") int orderId){
+    public Result updateOrderlist(@PathVariable("id") int orderId){
         Orderlist orderlist = new Orderlist();
         orderlist.setOrderId(orderId);
-        orderlist.setStatus(true);
-        Boolean res = orderlistService.updateById(orderlist);
+        orderlist.setStatus(1);
+        Result res = new Result();
+        orderlistService.updateById(orderlist);
+        res.setCode(1);
         return res;
     }
 
@@ -59,11 +63,13 @@ public class OrderlistController {
         return orderlistService.getAll(page,size);
     }
 
-    @GetMapping("/selectList/{condition}")
-    @ApiOperation("根据地址、收货人、电话查询")
-    public List<Orderlist> selectOrderlist(@PathVariable("condition")String fuzzy){
-        List<Orderlist> order =  orderlistService.getListByFuzzy(fuzzy);
-        return order;
+    @GetMapping("/selectList/{fuzzy}/{page}/{size}")
+    @ApiOperation("模糊查询并分页显示")
+    public IPage<Orderlist> selectByFuzzy(@PathVariable("fuzzy")String fuzzy,
+                                          @PathVariable("page")int page,
+                                          @PathVariable("size")int size){
+        return orderlistService.getListByFuzzy(fuzzy,page,size);
+
     }
 }
 

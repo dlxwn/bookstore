@@ -18,7 +18,7 @@ import java.util.List;
 public interface OrderlistService extends IService<Orderlist> {
 
 
-    List<Orderlist> getListByFuzzy(String fuzzy);
+    IPage<Orderlist> getListByFuzzy(String fuzzy, int page, int size);
 
     IPage<Orderlist> getAll(int page, int size);
 }
