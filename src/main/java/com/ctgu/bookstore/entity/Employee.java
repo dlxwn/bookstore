@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -54,11 +56,12 @@ public class Employee implements Serializable {
     @ApiModelProperty(value = "性别")
     private String sex;
 
+    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
     @ApiModelProperty(value = "生日")
     private Date birthday;
 
     @ApiModelProperty(value = "居住地址")
-    private String adress;
+    private String address;
 
     @ApiModelProperty(value = "头像,默认头像url")
     private String avatar;

@@ -32,16 +32,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return userMapper.selectOne(qw);
     }
     @Override
-    public List<User> getListUserByFuzzy(String field) {
+    public IPage<User> getListUserByFuzzy(String field, int page, int size) {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.like("name",field).or()
-                .like("email",field).or()
-                .like("user_id",field).or()
-                .like("nick_name",field).or()
-                .like("sex",field).or()
-                .like("adress",field);
-        List<User> users = userMapper.selectList(wrapper);
-        return users;
+        if (field != null){
+            wrapper.like("name",field).or()
+                    .like("email",field).or()
+                    .like("user_id",field).or()
+                    .like("nick_name",field).or()
+                    .like("sex",field).or()
+                    .like("address",field);
+        }
+        IPage<User> userIPage = userMapper.selectPage(new Page<>(page, size), wrapper);
+        return userIPage;
     }
 
     @Override
@@ -67,8 +69,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             wrapper.like("name",query.getName());
         if(query.getBirthday() != null)
             wrapper.like("birthday",query.getBirthday());
-        if(query.getAdress() != null)
-            wrapper.like("adress",query.getAdress());
+        if(query.getAddress() != null)
+            wrapper.like("address",query.getAddress());
         if(query.getSex() != null)
             wrapper.like("sex",query.getSex());
         return userMapper.selectPage(new Page<>(1,10), wrapper);

@@ -4,8 +4,10 @@ package com.ctgu.bookstore.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ctgu.bookstore.entity.User;
 import com.ctgu.bookstore.service.UserService;
+import com.ctgu.bookstore.utils.UserExcelUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +22,7 @@ import java.util.UUID;
  * @author: Linn
  * @create: 2020-06-2 16:05
  **/
+@CrossOrigin(origins = "*",maxAge = 3600)
 @RestController
 @RequestMapping("/bookstore/user")
 public class UserController {
@@ -78,6 +81,13 @@ public class UserController {
         session.invalidate();
     }
 
+    @GetMapping("/export")
+    @ApiOperation("批量导出用户信息")
+    public ResponseEntity<byte[]> exportUser(){
+        List list = userService.list(null);
+        return UserExcelUtils.export(list);
+    }
+
     @GetMapping("/find/{id}")
     @ApiOperation("根据id查找用户")
     public User getById(@PathVariable("id") int id){
@@ -96,10 +106,10 @@ public class UserController {
         return userService.getAllByRequest(query);
     }
 
-    @GetMapping("/findList/{field}")
+    @GetMapping("/findList/{field}/{page}/{size}")
     @ApiOperation("字段模糊查询")
-    public List<User> getListUserByFuzzy(@PathVariable("field") String field){
-        return userService.getListUserByFuzzy(field);
+    public IPage<User> getListUserByFuzzy(@PathVariable("field") String field, @PathVariable("page") int page, @PathVariable("size") int size){
+        return userService.getListUserByFuzzy(field,page,size);
     }
 
     @PostMapping("/add")

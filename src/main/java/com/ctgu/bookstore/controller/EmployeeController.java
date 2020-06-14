@@ -4,8 +4,11 @@ package com.ctgu.bookstore.controller;
 import com.ctgu.bookstore.entity.Employee;
 import com.ctgu.bookstore.entity.Result;
 import com.ctgu.bookstore.service.EmployeeService;
+import com.ctgu.bookstore.utils.EmployExcelUtils;
+import com.ctgu.bookstore.utils.UserExcelUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ctgu.bookstore.entity.Employee;
@@ -66,6 +69,13 @@ public class EmployeeController {
     @ApiOperation("实现职员的退出")
     public void employeeLogout(){
         session.invalidate();
+    }
+
+    @GetMapping("/export")
+    @ApiOperation("批量导出雇员信息")
+    public ResponseEntity<byte[]> exportUser(){
+        List list = employeeService.getListUserByFuzzy(null);
+        return EmployExcelUtils.export(list);
     }
 
     @GetMapping("/find/{id}")
