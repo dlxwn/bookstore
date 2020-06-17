@@ -48,7 +48,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     }
 
     @Override
-    public List<Employee> getListUserByFuzzy(String field) {
+    public IPage<Employee> getListUserByFuzzy(String field,int page, int size) {
         QueryWrapper<Employee> wrapper = new QueryWrapper<>();
         if(field != null){
             wrapper.like("name",field).or()
@@ -61,8 +61,8 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
                     .like("phone_number",field).or()
                     .like("salary",field);
         }
-        List<Employee> employees = employeeMapper.selectList(wrapper);
-        return employees;
+        IPage<Employee> employeeIPage = employeeMapper.selectPage(new Page<>(page, size), wrapper);
+        return employeeIPage;
     }
 
     @Override

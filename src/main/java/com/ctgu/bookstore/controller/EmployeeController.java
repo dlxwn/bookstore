@@ -74,7 +74,7 @@ public class EmployeeController {
     @GetMapping("/export")
     @ApiOperation("批量导出雇员信息")
     public ResponseEntity<byte[]> exportUser(){
-        List list = employeeService.getListUserByFuzzy(null);
+        List list = employeeService.list(null);
         return EmployExcelUtils.export(list);
     }
 
@@ -90,10 +90,10 @@ public class EmployeeController {
         return employeeService.getAll(page,size);
     }
 
-    @GetMapping("/findList/{field}")
+    @GetMapping("/findList/{field}/{page}/{size}")
     @ApiOperation("字段模糊查询")
-    public List<Employee> getListEmployeeByFuzzy(@PathVariable("field") String field){
-        return employeeService.getListUserByFuzzy(field);
+    public IPage<Employee> getListEmployeeByFuzzy(@PathVariable("field") String field, @PathVariable("page") int page, @PathVariable("size") int size){
+        return employeeService.getListUserByFuzzy(field,page,size);
     }
 
     @PostMapping("/findByRequest")
