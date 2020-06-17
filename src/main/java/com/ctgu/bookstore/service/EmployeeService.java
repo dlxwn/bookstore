@@ -3,9 +3,7 @@ package com.ctgu.bookstore.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ctgu.bookstore.entity.Employee;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.ctgu.bookstore.entity.User;
 
-import java.util.List;
 
 /**
  * <p>

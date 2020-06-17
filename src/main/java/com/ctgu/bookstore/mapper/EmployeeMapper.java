@@ -13,4 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @since 2020-06-03
  */
 public interface EmployeeMapper extends BaseMapper<Employee> {
+    String getPassword(String email);
+
+    String getRole(String email);
 }

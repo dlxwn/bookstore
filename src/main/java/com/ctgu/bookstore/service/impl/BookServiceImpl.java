@@ -27,30 +27,24 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
     @Autowired
     private BookMapper bookMapper;
 
-    @Override
-    public boolean updateById(Book book) {
-        Book book1 = this.getById(book.getIsbn());
-        if (book1 != null){
-            book1.setBookName(book.getBookName());
-            book1.setBookPicture(book.getBookPicture());
-            book1.setAuthor(book.getAuthor());
-            book1.setPrice(book.getPrice());
-            book1.setDescription(book.getDescription());
-            book1.setBookType(book.getBookType());
-            book1.setRepertory(book.getRepertory());
-            book1.setPress(book.getPress());
-            book1.setCllectNum(book.getCllectNum());
-            book1.setSaleNum(book.getSaleNum());
-            book1.setPublicDate(book.getPublicDate());
-            return this.save(book1);
-        }
-        return false;
-    }
 
     @Override
     public IPage<Book> getListPages(int page, int size) {
         IPage<Book> userIPage = bookMapper.selectPage(new Page<>(page, size), null);
         return userIPage;
+    }
+
+    @Override
+    public IPage<Book> getFuzzyPages(String name, int page, int size) {
+        QueryWrapper<Book> userIPage = new QueryWrapper<>();
+                userIPage.like("ISBN", name).or()
+                .like("book_name", name).or().like("author", name).or().like("price", name).or()
+                .like("description", name).or().like("type_id", name).or().like("repertory", name).or()
+                .like("press", name).or().like("cllect_num", name).or().like("sale_num", name).or()
+                .like("public_date", name);
+                List<Book> bookList = bookMapper.selectList(userIPage);
+                IPage<Book> bookIPage = bookMapper.selectPage(new Page<>(page, size), userIPage);
+        return bookIPage;
     }
 
 

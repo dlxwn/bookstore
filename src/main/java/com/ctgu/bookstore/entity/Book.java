@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -46,7 +48,7 @@ public class Book implements Serializable {
     private String description;
 
     @ApiModelProperty(value = "类型")
-    private String bookType;
+    private Integer typeId;
 
     @ApiModelProperty(value = "库存")
     private Integer repertory;
@@ -60,8 +62,9 @@ public class Book implements Serializable {
     @ApiModelProperty(value = "月销量")
     private Integer saleNum;
 
+    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
     @ApiModelProperty(value = "出版日期")
-    private Date publicDate;
+    private String publicDate;
 
 
 }

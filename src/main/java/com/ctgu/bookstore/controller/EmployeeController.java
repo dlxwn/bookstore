@@ -15,6 +15,9 @@ import com.ctgu.bookstore.entity.Employee;
 import com.ctgu.bookstore.entity.User;
 import com.ctgu.bookstore.service.EmployeeService;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
