@@ -33,11 +33,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 
     @Override
     public Employee getByEmail(String email) {
-        Employee employeeCondition = new Employee();
-        employeeCondition.setEmail(email);
-        QueryWrapper<Employee> qw = new QueryWrapper<>();
-        qw.setEntity(employeeCondition);
-        Employee employee = employeeMapper.selectOne(qw);
+        Employee employee = employeeMapper.selectOne(new QueryWrapper<Employee>().eq("email",email));
         return employee;
     }
 
@@ -95,8 +91,8 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         if(query.getBirthday() != null) {
             wrapper.like("birthday",query.getBirthday());
         }
-        if(query.getAdress() != null) {
-            wrapper.like("adress",query.getAdress());
+        if(query.getAddress() != null) {
+            wrapper.like("address",query.getAddress());
         }
         return employeeMapper.selectPage(new Page<>(1,10),wrapper);
     }
