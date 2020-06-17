@@ -16,4 +16,7 @@ public class ResultOrderDetail {
 
     @ApiModelProperty(value = "购买数量")
     private Integer num;
+
+    @ApiModelProperty(value = "图片链接")
+    private String bookPicture;
 }

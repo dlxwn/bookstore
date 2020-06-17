@@ -44,6 +44,7 @@ public class OrderdetailController {
             rest.setBookName(bookService.getById(item.getIsbn()).getBookName());
             rest.setNum(item.getNum());
             rest.setPrice(item.getPrice());
+            rest.setBookPicture(bookService.getById(item.getIsbn()).getBookPicture());
             System.out.println(rest);
             res.add(rest);
         }
