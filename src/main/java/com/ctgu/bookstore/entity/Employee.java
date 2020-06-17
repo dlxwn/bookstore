@@ -58,7 +58,7 @@ public class Employee implements Serializable {
     private Date birthday;
 
     @ApiModelProperty(value = "居住地址")
-    private String adress;
+    private String address;
 
     @ApiModelProperty(value = "头像,默认头像url")
     private String avatar;

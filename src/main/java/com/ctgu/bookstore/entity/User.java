@@ -55,7 +55,7 @@ public class User implements Serializable {
     private Date birthday;
 
     @ApiModelProperty(value = "住址")
-    private String adress;
+    private String address;
 
     @ApiModelProperty(value = "性别")
     private String sex;
