@@ -84,8 +84,8 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
             wrapper.like("sex",query.getSex());
         if(query.getBirthday() != null)
             wrapper.like("birthday",query.getBirthday());
-        if(query.getAdress() != null)
-            wrapper.like("adress",query.getAdress());
+        if(query.getAddress() != null)
+            wrapper.like("address",query.getAddress());
         return employeeMapper.selectPage(new Page<>(1,10),wrapper);
     }
 }

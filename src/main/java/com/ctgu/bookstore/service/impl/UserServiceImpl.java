@@ -39,7 +39,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .like("user_id",field).or()
                 .like("nick_name",field).or()
                 .like("sex",field).or()
-                .like("adress",field);
+                .like("address",field);
         List<User> users = userMapper.selectList(wrapper);
         return users;
     }
@@ -67,8 +67,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             wrapper.like("name",query.getName());
         if(query.getBirthday() != null)
             wrapper.like("birthday",query.getBirthday());
-        if(query.getAdress() != null)
-            wrapper.like("adress",query.getAdress());
+        if(query.getAddress() != null)
+            wrapper.like("address",query.getAddress());
         if(query.getSex() != null)
             wrapper.like("sex",query.getSex());
         return userMapper.selectPage(new Page<>(1,10), wrapper);

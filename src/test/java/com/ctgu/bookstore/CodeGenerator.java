@@ -29,7 +29,7 @@ public class CodeGenerator {
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
         gc.setOutputDir(projectPath+"/src/main/java");
-        gc.setAuthor("xuzhen");
+        gc.setAuthor("wby");
         gc.setOpen(false);
         gc.setFileOverride(false); // 是否覆盖
         gc.setServiceName("%sService"); // 去Service的I前缀
@@ -42,7 +42,7 @@ public class CodeGenerator {
         dsc.setUrl("jdbc:mysql://127.0.0.1:3306/bookstore?useUnicode=true&characterEncoding=UTF-8&userSSL=false&serverTimezone=GMT%2B8");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
-        dsc.setPassword("123456");
+        dsc.setPassword("root");
         dsc.setDbType(DbType.MYSQL);
         mpg.setDataSource(dsc);
         //3、包的配置
@@ -56,7 +56,7 @@ public class CodeGenerator {
         mpg.setPackageInfo(pc);
         //4、策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setInclude("book","user","employee","orderlist","comment"); // 设置要映射的表名
+        strategy.setInclude("bookclassify"); // 设置要映射的表名
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true); // 自动lombok；

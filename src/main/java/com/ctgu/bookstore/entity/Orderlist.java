@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -40,7 +42,7 @@ public class Orderlist implements Serializable {
     private Float amount;
 
     @ApiModelProperty(value = "订单状态")
-    private Boolean status;
+    private Integer status;
 
     @ApiModelProperty(value = "收货人姓名")
     private String orderName;
@@ -51,6 +53,7 @@ public class Orderlist implements Serializable {
     @ApiModelProperty(value = "地址")
     private String orderAddress;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     @ApiModelProperty(value = "交易时间")
     private Date orderDate;
 
