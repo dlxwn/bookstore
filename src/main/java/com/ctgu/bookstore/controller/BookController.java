@@ -7,13 +7,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ctgu.bookstore.entity.Book;
 import com.ctgu.bookstore.mapper.BookMapper;
 import com.ctgu.bookstore.service.BookService;
-import com.ctgu.bookstore.utils.ExcelExport;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +23,7 @@ import java.util.Map;
  * @author Nidol
  * @since 2020-06-03
  */
+@CrossOrigin(origins = "*",maxAge = 3600)
 @RestController
 @RequestMapping("/bookstore/book")
 public class BookController {

@@ -20,7 +20,7 @@ public interface EmployeeService extends IService<Employee> {
     Employee getByEmail(String email);
     IPage<Employee> getAll(int page, int size);
 
-    List<Employee> getListUserByFuzzy(String field);
+    IPage<Employee> getListUserByFuzzy(String field, int page, int size);
 
     IPage<Employee> getAllByRequest(Employee query);
 }

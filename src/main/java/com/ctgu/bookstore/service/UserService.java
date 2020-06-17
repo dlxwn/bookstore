@@ -15,7 +15,7 @@ import java.util.List;
  * @since 2020-06-03
  */
 public interface UserService extends IService<User> {
-    List<User> getListUserByFuzzy(String field);
+    IPage<User> getListUserByFuzzy(String field,int page,int size);
 
     User getByEmail(String email);
     IPage<User> getAll(int page, int size);
