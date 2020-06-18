@@ -16,4 +16,5 @@ import java.util.List;
 public interface OrderdetailService extends IService<Orderdetail> {
 
     List<Orderdetail> getListById(int id);
+
 }

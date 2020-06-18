@@ -28,6 +28,18 @@ public class OrderlistController {
     @Autowired
     private OrderlistService orderlistService;
 
+    @GetMapping("/total")
+    @ApiOperation("获取订单数量")
+    public int getTotalOrder(){
+        return orderlistService.list(null).size();
+    }
+
+    @GetMapping("/total/amount")
+    @ApiOperation("获取总营业额")
+    public double getTotalAmount(){
+        return orderlistService.getTotalAmount();
+    }
+
     @DeleteMapping("/delete/{id}")
     @ApiOperation("删除一个订单")
     public Result deleteOrderlist(@PathVariable("id") int orderId){

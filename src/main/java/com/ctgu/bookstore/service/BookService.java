@@ -21,4 +21,5 @@ public interface BookService extends IService<Book> {
     IPage<Book> getListPages(int page, int size);
 
     IPage<Book> getFuzzyPages(String fuzzy, int page, int size);
+
 }

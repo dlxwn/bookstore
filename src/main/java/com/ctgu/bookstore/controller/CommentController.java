@@ -28,6 +28,12 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
+    @GetMapping("/total")
+    @ApiOperation("获取评论数量")
+    public int getTotalComment(){
+        return commentService.list(null).size();
+    }
+
     @GetMapping("/test/{id}")
     @ApiOperation("获取一个评论")
     public Comment getOneComment(@PathVariable("id") int Commentid){

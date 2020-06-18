@@ -21,4 +21,6 @@ public interface OrderlistService extends IService<Orderlist> {
     IPage<Orderlist> getListByFuzzy(String fuzzy, int page, int size);
 
     IPage<Orderlist> getAll(int page, int size);
+
+    double getTotalAmount();
 }

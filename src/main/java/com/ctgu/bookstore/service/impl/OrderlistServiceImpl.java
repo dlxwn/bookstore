@@ -42,4 +42,16 @@ public class OrderlistServiceImpl extends ServiceImpl<OrderlistMapper, Orderlist
         return orderIPage;
     }
 
+    @Override
+    public double getTotalAmount() {
+        double res = 0;
+        List<Orderlist> orderlists = orderlistMapper.selectList(null);
+        for (Orderlist order: orderlists
+             ) {
+            if(order.getStatus() == 1)
+                res += order.getAmount();
+        }
+        return res;
+    }
+
 }

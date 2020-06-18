@@ -33,6 +33,13 @@ public class UserController {
     @Autowired
     private HttpSession session;
 
+    @GetMapping("/total/")
+    @ApiOperation("获得用户总数")
+    public int getTotalUser(){
+        return userService.list(null).size();
+    }
+
+
     @GetMapping("/userLogin/{email}/{password}")
     @ApiOperation("会员通过邮箱密码登陆")
     public Result userLogin(@PathVariable("email")String email,
