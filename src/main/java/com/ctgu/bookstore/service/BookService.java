@@ -22,4 +22,6 @@ public interface BookService extends IService<Book> {
 
     IPage<Book> getFuzzyPages(String fuzzy, int page, int size);
 
+    Integer countByBookClass(int booktype);
+
 }

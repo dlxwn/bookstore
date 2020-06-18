@@ -53,5 +53,12 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
         return bookIPage;
     }
 
+    @Override
+    public Integer countByBookClass(int booktype) {
+        QueryWrapper<Book> wrapper = new QueryWrapper<>();
+        wrapper.eq("book_type",booktype);
+        return bookMapper.selectCount(wrapper);
+    }
+
 
 }

@@ -170,5 +170,15 @@ public class BookController {
             e.printStackTrace();
         }
     }
+
+    @GetMapping("/top5")
+    @ApiOperation("月销排名前5的图书名")
+    public List<Book> listTop5(){
+        QueryWrapper<Book> wrapper =new QueryWrapper<Book>();
+        wrapper.select("book_name","sale_num")
+                .orderByDesc("sale_num")
+                .last("limit 5");
+        return bookService.list(wrapper);
+    }
 }
 
