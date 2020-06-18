@@ -49,8 +49,9 @@ public class BookclassifyController {
         for (Bookclassify x:slist
              ) {
             ResultBookclassify res = new ResultBookclassify();
-            res.setClassName(x.getClassName());
-            res.setCount(bookService.countByBookClass(x.getClassId()));
+            res.setValue(bookService.countByBookClass(x.getClassId()));
+            res.setName(x.getClassName());
+
             list.add(res);
         }
         for (ResultBookclassify x:

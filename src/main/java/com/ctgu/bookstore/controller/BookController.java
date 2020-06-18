@@ -19,9 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -173,12 +171,22 @@ public class BookController {
 
     @GetMapping("/top5")
     @ApiOperation("月销排名前5的图书名")
-    public List<Book> listTop5(){
+    public Map<String,List> listTop5(){
+        List<String> slist=new ArrayList<>();
+        List<Integer> ilist=new ArrayList<>();
         QueryWrapper<Book> wrapper =new QueryWrapper<Book>();
         wrapper.select("book_name","sale_num")
                 .orderByDesc("sale_num")
                 .last("limit 5");
-        return bookService.list(wrapper);
+        List<Book> list=  bookService.list(wrapper);
+        for (Book b:list) {
+            slist.add(b.getBookName());
+            ilist.add(b.getSaleNum());
+        }
+        Map<String,List> mp = new HashMap<>();
+        mp.put("cp",slist);
+        mp.put("product",ilist);
+        return mp;
     }
 }
 

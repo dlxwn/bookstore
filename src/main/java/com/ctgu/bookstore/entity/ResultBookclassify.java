@@ -13,9 +13,10 @@ import lombok.Data;
 @Data
 @ApiModel(value = "返回图书分类数据对象", description = "")
 public class ResultBookclassify {
-    @ApiModelProperty(value = "类目名称")
-    private String className;
 
     @ApiModelProperty(value = "每类数目")
-    private int count;
+    private int value;
+
+    @ApiModelProperty(value = "类目名称")
+    private String name;
 }
