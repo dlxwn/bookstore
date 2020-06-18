@@ -37,13 +37,19 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
     @Override
     public IPage<Book> getFuzzyPages(String name, int page, int size) {
         QueryWrapper<Book> userIPage = new QueryWrapper<>();
-                userIPage.like("ISBN", name).or()
-                .like("book_name", name).or().like("author", name).or().like("price", name).or()
-                .like("description", name).or().like("type_id", name).or().like("repertory", name).or()
-                .like("press", name).or().like("cllect_num", name).or().like("sale_num", name).or()
+        userIPage.like("ISBN", name).or()
+                .like("book_name", name).or()
+                .like("author", name).or()
+                .like("price", name).or()
+                .like("description", name).or()
+                .like("book_type", name).or()
+                .like("repertory", name).or()
+                .like("press", name).or()
+                .like("cllect_num", name).or()
+                .like("sale_num", name).or()
                 .like("public_date", name);
-                List<Book> bookList = bookMapper.selectList(userIPage);
-                IPage<Book> bookIPage = bookMapper.selectPage(new Page<>(page, size), userIPage);
+
+        IPage<Book> bookIPage = bookMapper.selectPage(new Page<>(page, size), userIPage);
         return bookIPage;
     }
 
