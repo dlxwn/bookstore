@@ -48,7 +48,7 @@ public class Book implements Serializable {
     private String description;
 
     @ApiModelProperty(value = "类型")
-    private Integer typeId;
+    private Integer bookType;
 
     @ApiModelProperty(value = "库存")
     private Integer repertory;

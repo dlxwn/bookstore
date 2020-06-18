@@ -41,7 +41,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .like("sex",field).or()
                 .like("address",field);
         List<User> users = userMapper.selectList(wrapper);
-        return users;
         if (field != null){
             wrapper.like("name",field).or()
                     .like("email",field).or()

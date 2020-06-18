@@ -148,7 +148,7 @@ public class ExcelUtil {
                         }else if (j == 5) {
                             jiFenExcel.setDescription(data);
                         }else if (j == 6) {
-                            jiFenExcel.setTypeId(Integer.valueOf(data));
+                            jiFenExcel.setBookType(Integer.valueOf(data));
                         }else if (j == 7) {
                             jiFenExcel.setRepertory(Integer.valueOf(data));
                         }else if (j == 8) {
