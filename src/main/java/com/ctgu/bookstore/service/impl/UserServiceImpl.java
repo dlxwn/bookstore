@@ -82,4 +82,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             wrapper.like("sex",query.getSex());
         return userMapper.selectPage(new Page<>(1,10), wrapper);
     }
+
+    @Override
+    public boolean isExist(String email) {
+        User user = new User();
+        user.setEmail(email);
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>(user);
+        User user1 = userMapper.selectOne(queryWrapper);
+        System.out.println("看看看看看看看" + user1);
+        if (user1 != null){
+            return false;
+        }else {
+            return true;
+        }
+    }
 }

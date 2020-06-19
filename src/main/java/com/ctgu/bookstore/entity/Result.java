@@ -25,4 +25,13 @@ public class Result {
 
     @ApiModelProperty(value = "返回token")
     private String token;
+
+    public Result(){
+
+    }
+    public Result(int code, String message, Object data) {
+        this.code = code;
+        this.msg = message;
+        this.data = data;
+    }
 }

@@ -66,4 +66,6 @@ public class User implements Serializable {
     @ApiModelProperty(value = "头像,默认头像url")
     private String avatar;
 
+    @ApiModelProperty(value = "加盐")
+    private String salt;
 }
