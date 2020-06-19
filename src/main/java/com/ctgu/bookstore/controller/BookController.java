@@ -61,10 +61,17 @@ public class BookController {
 
     @GetMapping("/get/{isbn}")
     @ApiOperation("获取从前端传过来的ISBN，返回这本书的信息")
-    public Book getOneBook(@PathVariable("isbn") String isbn) {
+    public Result getOneBook(@PathVariable("isbn") String isbn) {
         Book book = bookService.getById(isbn);
         System.out.println(book);
-        return book;
+        Result result = new Result();
+        if(book!=null){
+            result.setCode(0);
+            result.setData(book);
+        }else{
+            result.setCode(1);
+        }
+        return result;
     }
 
     @PostMapping("/update")
@@ -82,18 +89,38 @@ public class BookController {
     @ApiOperation("查询所有图书的信息")
     public List<Book> listBooks() {
         List<Book> books = bookMapper.selectList(null);
-        for (Book map : books) {
-            System.out.println(map);
-        }
         return books;
     }
 
-    @GetMapping("/getFuzzy")
+    @GetMapping("/listTopBook")
+    @ApiOperation("查询所有畅销图书的信息")
+    public Result listTopBooks() {
+        QueryWrapper wrapper=new QueryWrapper();
+        wrapper.orderByDesc("sale_num");
+        List<Book> books = bookMapper.selectList(wrapper);
+        Result result =new Result();
+        if(books!=null){
+            result.setCode(0);
+            result.setData(books);
+        }else{
+            result.setCode(1);
+        }
+        return result;
+    }
+
+    @GetMapping("/getFuzzy/{keyword}")
     @ApiOperation("图书名称、作者模糊查询")
-    public List<Book> getFuzzy(@RequestParam("name") String name){
+    public Result getFuzzy(@PathVariable("keyword") String keyword){
         List<Book> books = this.bookMapper.selectList(new QueryWrapper<Book>()
-        .like("book_name", name).or().like("author", name));
-        return books;
+        .like("book_name", keyword).or().like("author", keyword));
+        Result result =new Result();
+        if(books!=null){
+            result.setCode(0);
+            result.setData(books);
+        }else{
+            result.setCode(1);
+        }
+        return result;
     }
 
     @GetMapping("/listPages/{page}/{size}")
