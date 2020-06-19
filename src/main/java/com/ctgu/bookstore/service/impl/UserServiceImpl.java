@@ -41,7 +41,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .like("sex",field).or()
                 .like("address",field);
         List<User> users = userMapper.selectList(wrapper);
-        return users;
         if (field != null){
             wrapper.like("name",field).or()
                     .like("email",field).or()
@@ -82,5 +81,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if(query.getSex() != null)
             wrapper.like("sex",query.getSex());
         return userMapper.selectPage(new Page<>(1,10), wrapper);
+    }
+
+    @Override
+    public boolean isExist(String email) {
+        User user = new User();
+        user.setEmail(email);
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>(user);
+        User user1 = userMapper.selectOne(queryWrapper);
+        System.out.println("看看看看看看看" + user1);
+        if (user1 != null){
+            return false;
+        }else {
+            return true;
+        }
     }
 }

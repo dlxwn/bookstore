@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public interface BookService extends IService<Book> {
 
-    boolean updateById(Book book);
-
     IPage<Book> getListPages(int page, int size);
+
+    IPage<Book> getFuzzyPages(String fuzzy, int page, int size);
 }

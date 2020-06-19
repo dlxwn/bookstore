@@ -4,8 +4,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ctgu.bookstore.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
-import java.util.List;
-
 /**
  * <p>
  *  服务类
@@ -21,4 +19,6 @@ public interface UserService extends IService<User> {
     IPage<User> getAll(int page, int size);
 
     IPage<User> getAllByRequest(User query);
+
+    boolean isExist(String email);
 }

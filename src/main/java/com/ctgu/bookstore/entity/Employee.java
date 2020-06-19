@@ -67,7 +67,8 @@ public class Employee implements Serializable {
     private String avatar;
 
     @ApiModelProperty(value = "是否为超级管理员")
-    private Boolean isAdmin;
+    private String isAdmin;
+
 
 
 }

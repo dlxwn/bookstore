@@ -1,12 +1,15 @@
 package com.ctgu.bookstore.entity;
 
-import io.swagger.annotations.Api;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.servlet.http.HttpSession;
 
+
+/**
+ * @author Administrator
+ */
 @Data
 @ApiModel(value = "登陆验证返回对象", description = "")
 public class Result {
@@ -22,4 +25,13 @@ public class Result {
 
     @ApiModelProperty(value = "返回token")
     private String token;
+
+    public Result(){
+
+    }
+    public Result(int code, String message, Object data) {
+        this.code = code;
+        this.msg = message;
+        this.data = data;
+    }
 }

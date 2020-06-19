@@ -68,26 +68,38 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     @Override
     public IPage<Employee> getAllByRequest(Employee query) {
         QueryWrapper<Employee> wrapper = new QueryWrapper<>();
-        if (query.getEmpId() != null)
+        if (query.getEmpId() != null) {
             wrapper.like("emp_id",query.getEmpId());
-        if(query.getPhoneNumber() != null)
+        }
+        if(query.getPhoneNumber() != null) {
             wrapper.like("phone_number",query.getPhoneNumber());
-        if(query.getEmail() != null)
+        }
+        if(query.getEmail() != null) {
             wrapper.like("email",query.getEmail());
-        if(query.getSalary() != null)
+        }
+        if(query.getSalary() != null) {
             wrapper.like("salary",query.getSalary());
-        if(query.getDepartment() != null)
+        }
+        if(query.getDepartment() != null) {
             wrapper.like("department",query.getDepartment());
-        if(query.getPosition() != null)
+        }
+        if(query.getPosition() != null) {
             wrapper.like("position",query.getPosition());
-        if(query.getName() != null)
+        }
+        if(query.getName() != null) {
             wrapper.like("name",query.getName());
-        if(query.getSex() != null)
+        }
+        if(query.getSex() != null) {
             wrapper.like("sex",query.getSex());
-        if(query.getBirthday() != null)
+        }
+        if(query.getBirthday() != null) {
             wrapper.like("birthday",query.getBirthday());
-        if(query.getAddress() != null)
-            wrapper.like("address",query.getAddress());
+        }
+        if(query.getAddress() != null) {
+            wrapper.like("adress",query.getAddress());
+        }
         return employeeMapper.selectPage(new Page<>(1,10),wrapper);
     }
+
+
 }
