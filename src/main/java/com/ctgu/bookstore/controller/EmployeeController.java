@@ -81,7 +81,7 @@ public class EmployeeController {
     }
 
 
-    @GetMapping("/employeeLogin/{email}/{password}")
+    @PostMapping("/employeeLogin/{email}/{password}")
     @ApiOperation("职员通过邮箱密码登陆")
     public Result employeeLogin(@PathVariable("email")String email,
                                 @PathVariable("password")String password, HttpServletRequest request){

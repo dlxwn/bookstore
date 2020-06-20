@@ -62,24 +62,33 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public IPage<User> getAllByRequest(User query) {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        if (query.getUserId() != null)
+        if (query.getUserId() != null) {
             wrapper.like("user_id",query.getUserId());
-        if (query.getUserLevel() != null)
+        }
+        if (query.getUserLevel() != null) {
             wrapper.like("user_level",query.getUserLevel());
-        if(query.getEmail() != null)
+        }
+        if(query.getEmail() != null) {
             wrapper.like("email",query.getEmail());
-        if(query.getNickName() != null)
+        }
+        if(query.getNickName() != null) {
             wrapper.like("nick_name",query.getNickName());
-        if(query.getPhoneNumber() != null)
+        }
+        if(query.getPhoneNumber() != null) {
             wrapper.like("phone_number",query.getPhoneNumber());
-        if(query.getName() != null)
+        }
+        if(query.getName() != null) {
             wrapper.like("name",query.getName());
-        if(query.getBirthday() != null)
+        }
+        if(query.getBirthday() != null) {
             wrapper.like("birthday",query.getBirthday());
-        if(query.getAddress() != null)
+        }
+        if(query.getAddress() != null) {
             wrapper.like("address",query.getAddress());
-        if(query.getSex() != null)
+        }
+        if(query.getSex() != null) {
             wrapper.like("sex",query.getSex());
+        }
         return userMapper.selectPage(new Page<>(1,10), wrapper);
     }
 
