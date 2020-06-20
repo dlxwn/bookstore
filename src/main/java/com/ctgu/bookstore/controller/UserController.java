@@ -78,11 +78,11 @@ public int getTotalUser(){
     return userService.list(null).size();
 }
 
-    @PostMapping(value = "/userLogin/{email}/{password}/{verCode}")
+    @PostMapping(value = "/userLogin")
     @ResponseBody
-    public Result login(@RequestBody @PathVariable("email") String email,
-                        @PathVariable("password") String password,
-                        @PathVariable("verCode") String verCode) {
+    public Result login(@RequestBody  String email,
+                         String password,
+                         String verCode) {
         System.out.println("接收到的参数+" + email + "         " + password + "      " + verCode);
         Result result = new Result();
         User user = userService.getByEmail(email);
