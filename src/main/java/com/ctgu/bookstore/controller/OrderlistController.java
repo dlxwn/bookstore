@@ -86,11 +86,11 @@ public class OrderlistController {
 
     @PostMapping("/add")
     @ApiOperation("添加订单")
-    public Result addOrder(@RequestBody Orderlist orderlist ){
+    public Result addOrder(@RequestBody String orderlist ){
         System.out.println(orderlist);
-        boolean save = orderlistService.save(orderlist);
+        //boolean save = orderlistService.save(orderlist);
         Result result = new Result();
-        if(save == true){
+        if(true == true){
             result.setCode(0);
             result.setMsg("添加成功");
 

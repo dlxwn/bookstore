@@ -1,6 +1,7 @@
 package com.ctgu.bookstore.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ctgu.bookstore.entity.User;
 import com.ctgu.bookstore.entity.VerifyCode;
@@ -79,11 +80,13 @@ public int getTotalUser(){
 }
 
     @PostMapping(value = "/userLogin")
-    @ResponseBody
-    public Result login(@RequestBody  String email,
-                         String password,
-                         String verCode) {
-        System.out.println("接收到的参数+" + email + "         " + password + "      " + verCode);
+    @ApiOperation("会员登录")
+    public Result login(@RequestBody  String json) {
+        JSONObject v= JSONObject.parseObject(json);
+        System.out.println("接收到的参数+" + v.get("email") + "         " + v.get("password") + "      " + v.get("verCode"));
+        String email= v.getString("email");
+        String password = v.getString("password");
+        String verCode = v.getString("verCode");
         Result result = new Result();
         User user = userService.getByEmail(email);
         Subject subject = SecurityUtils.getSubject();
