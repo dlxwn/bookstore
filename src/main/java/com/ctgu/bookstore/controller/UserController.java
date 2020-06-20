@@ -11,7 +11,6 @@ import com.ctgu.bookstore.utils.authCode.IVerifyCodeGen;
 import com.ctgu.bookstore.utils.authCode.SimpleCharVerifyCodeGenImpl;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import java.util.logging.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -21,7 +20,6 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
@@ -80,11 +78,12 @@ public int getTotalUser(){
     return userService.list(null).size();
 }
 
-    @GetMapping(value = "/userLogin/{email}/{password}")
+    @PostMapping(value = "/userLogin/{email}/{password}/{verCode}")
     @ResponseBody
     public Result login(@RequestBody @PathVariable("email") String email,
                         @PathVariable("password") String password,
-                        Model model) {
+                        @PathVariable("verCode") String verCode) {
+        System.out.println("接收到的参数+" + email + "         " + password + "      " + verCode);
         Result result = new Result();
         User user = userService.getByEmail(email);
         Subject subject = SecurityUtils.getSubject();
@@ -93,6 +92,13 @@ public int getTotalUser(){
         System.out.println("封装后的token：" + usernamePasswordToken);
         System.out.println("试着取一下邮箱" + usernamePasswordToken.getUsername());
         // 执行登录方法
+        System.out.println("前端接收到的验证码：" + verCode);
+        System.out.println("看看验证码！" + session.getAttribute("VerifyCode"));
+        if (!session.getAttribute("VerifyCode").equals(verCode)){
+            result.setCode(404);
+            result.setMsg("验证码错误");
+            return result;
+        }
         try {
             subject.login(usernamePasswordToken);
             result.setCode(1);
@@ -222,7 +228,7 @@ public int getTotalUser(){
         return userService.updateById(user);
     }
 
-    @GetMapping("/captcha")
+    @GetMapping("/verCode")
     @ApiOperation("验证码")
     public void verifyCode(HttpServletRequest request, HttpServletResponse response) {
         IVerifyCodeGen iVerifyCodeGen = new SimpleCharVerifyCodeGenImpl();
@@ -247,6 +253,7 @@ public int getTotalUser(){
             log.info("", e);
         }
     }
+
 
 }
 

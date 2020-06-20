@@ -215,5 +215,13 @@ public class BookController {
         mp.put("product",ilist);
         return mp;
     }
+
+//    @GetMapping("/getBookInfo")
+//    public List<Map<String, List<Book>>> getBookInfo() {
+//        List<Map<String, List<Book>>> bookLists = new ArrayList<>();
+//        List<Book> bookList = new ArrayList<>();
+//        QueryWrapper qw = new QueryWrapper();
+//        qw.groupBy()
+//    }
 }
 
