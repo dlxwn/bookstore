@@ -95,9 +95,9 @@ public class OrderlistController {
         JSONObject orderlistjson = JSONObject.parseObject(v.getString("orderlist"));
         Orderlist orderlist = JSON.toJavaObject(orderlistjson,Orderlist.class);
         System.out.println(orderlist);
-        //boolean save = orderlistService.save(orderlist);
+        boolean save = orderlistService.save(orderlist);
         Result result = new Result();
-        if(true == true){
+        if(save == true){
             result.setCode(0);
             result.setMsg("添加成功");
 

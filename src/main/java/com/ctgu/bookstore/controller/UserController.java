@@ -1,6 +1,7 @@
 package com.ctgu.bookstore.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ctgu.bookstore.entity.User;
@@ -88,6 +89,7 @@ public class UserController {
     @ApiOperation("会员登录")
     public Result login(@RequestBody  String json) {
         JSONObject v= JSONObject.parseObject(json);
+        System.out.println(v);
         System.out.println("接收到的参数+" + v.get("email") + "         " + v.get("password") + "      " + v.get("verCode"));
         String email= v.getString("email");
         String password = v.getString("password");
@@ -133,16 +135,25 @@ public class UserController {
 
     @PostMapping("/register")
     @ApiOperation("会员注册")
-    public Result register(@RequestBody User newUser){
-        String email = newUser.getEmail();
-        String password = newUser.getUserPassword();
+    public Result register(@RequestBody String json){
+        System.out.println(json);
+        JSONObject v= JSONObject.parseObject(json);
+//        User newUser= JSON.toJavaObject(v,User.class);
+        String email = v.getString("z_email");
+        String password = v.getString("z_pass");
         email = HtmlUtils.htmlEscape(email);
+        User newUser = new User();
         newUser.setEmail(email);
         boolean exist = userService.isExist(email);
         if (!exist) {
             String message = "用户名已被使用";
             return ResultFactory.buildFailResult(message);
         }
+        newUser.setNickName(v.getString("z_user"));
+        newUser.setPhoneNumber(v.getString("z_tel"));
+        newUser.setUserPassword(v.getString("z_pass"));
+        newUser.setName(v.getString("z_name"));
+        newUser.setSex(v.getString("z_sex"));
         // 生成盐，默认长度为16位
         String salt = new SecureRandomNumberGenerator().nextBytes().toString();
         // 设置 Hash算法迭代次数
@@ -153,7 +164,26 @@ public class UserController {
         newUser.setSalt(salt);
         newUser.setUserPassword(encodePassword);
         userService.save(newUser);
-        return ResultFactory.buildSuccessResult(newUser);
+        // 注册完成，进行登录操作
+        Result result = new Result();
+        User user = userService.getByEmail(email);
+        Subject subject = SecurityUtils.getSubject();
+        // 封装用户数据
+        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(email, password);
+        // 执行登录方法
+        try {
+            subject.login(usernamePasswordToken);
+            result.setCode(0);
+            result.setMsg("登录成功");
+            result.setData(user);
+            session.setAttribute("user", user);
+            String token = UUID.randomUUID().toString();
+            result.setToken(token);
+            return result;
+        }catch (Exception e){
+            result.setMsg("未知错误");
+            return result;
+        }
     }
 
 //    @PostMapping("/register/{email}/{password}")
