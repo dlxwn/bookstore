@@ -4,6 +4,7 @@ package com.ctgu.bookstore.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ctgu.bookstore.entity.Book;
+import com.ctgu.bookstore.entity.BookClass;
 import com.ctgu.bookstore.entity.Result;
 import com.ctgu.bookstore.mapper.BookMapper;
 import com.ctgu.bookstore.service.BookService;
@@ -216,12 +217,111 @@ public class BookController {
         return mp;
     }
 
-//    @GetMapping("/getBookInfo")
-//    public List<Map<String, List<Book>>> getBookInfo() {
-//        List<Map<String, List<Book>>> bookLists = new ArrayList<>();
-//        List<Book> bookList = new ArrayList<>();
-//        QueryWrapper qw = new QueryWrapper();
-//        qw.groupBy()
-//    }
+    @GetMapping("/getBookInfo")
+    public List<BookClass> getBookInfo() {
+        BookClass bookClass = new BookClass();
+        // 查找所有类型为1的图书信息
+        Book book = new Book();
+        book.setBookType(1);
+        QueryWrapper<Book> qw = new QueryWrapper<>(book);
+        List<Book> bookList = bookMapper.selectList(qw);
+        bookClass.setBooks(bookList);
+        bookClass.setClassname("教育");
+        // 查找所有类型为2的图书信息
+        Book book1 = new Book();
+        book1.setBookType(2);
+        BookClass bookClass1 = new BookClass();
+        QueryWrapper<Book> qw1 = new QueryWrapper<>(book1);
+        List<Book> bookList1 = bookMapper.selectList(qw1);
+        bookClass1.setBooks(bookList1);
+        bookClass1.setClassname("小说");
+        // 查找所有类型为3的图书信息
+        Book book2 = new Book();
+        book2.setBookType(3);
+        BookClass bookClass2 = new BookClass();
+        QueryWrapper<Book> qw2 = new QueryWrapper<>(book2);
+        List<Book> bookList2 = bookMapper.selectList(qw2);
+        bookClass2.setBooks(bookList2);
+        bookClass2.setClassname("文艺");
+        // 查找所有类型为4的图书信息
+        Book book3 = new Book();
+        book3.setBookType(4);
+        BookClass bookClass3 = new BookClass();
+        QueryWrapper<Book> qw3 = new QueryWrapper<>(book3);
+        List<Book> bookList3 = bookMapper.selectList(qw3);
+        bookClass3.setBooks(bookList3);
+        bookClass3.setClassname("专业书");
+        // 查找所有类型为5的图书信息
+        Book book4 = new Book();
+        book4.setBookType(5);
+        BookClass bookClass4 = new BookClass();
+        QueryWrapper<Book> qw4 = new QueryWrapper<>(book4);
+        List<Book> bookList4 = bookMapper.selectList(qw4);
+        bookClass4.setBooks(bookList4);
+        bookClass4.setClassname("动漫");
+        // 查找所有类型为6的图书信息
+        Book book5 = new Book();
+        book5.setBookType(6);
+        BookClass bookClass5 = new BookClass();
+        QueryWrapper<Book> qw5 = new QueryWrapper<>(book5);
+        List<Book> bookList5 = bookMapper.selectList(qw5);
+        bookClass5.setBooks(bookList5);
+        bookClass5.setClassname("童书");
+        // 查找所有类型为7的图书信息
+        Book book6 = new Book();
+        book6.setBookType(7);
+        BookClass bookClass6 = new BookClass();
+        QueryWrapper<Book> qw6 = new QueryWrapper<>(book6);
+        List<Book> bookList6 = bookMapper.selectList(qw6);
+        bookClass6.setBooks(bookList6);
+        bookClass6.setClassname("人文社科");
+        // 查找所有类型为8的图书信息
+        Book book7 = new Book();
+        book7.setBookType(8);
+        BookClass bookClass7 = new BookClass();
+        QueryWrapper<Book> qw7 = new QueryWrapper<>(book7);
+        List<Book> bookList7 = bookMapper.selectList(qw7);
+        bookClass7.setBooks(bookList7);
+        bookClass7.setClassname("经管");
+        // 查找所有类型为9的图书信息
+        Book book8 = new Book();
+        book8.setBookType(9);
+        BookClass bookClass8 = new BookClass();
+        QueryWrapper<Book> qw8 = new QueryWrapper<>(book8);
+        List<Book> bookList8 = bookMapper.selectList(qw8);
+        bookClass8.setBooks(bookList8);
+        bookClass8.setClassname("成功励志类");
+        // 查找所有类型为10的图书信息
+        Book book9 = new Book();
+        book9.setBookType(10);
+        BookClass bookClass9 = new BookClass();
+        QueryWrapper<Book> qw9 = new QueryWrapper<>(book9);
+        List<Book> bookList9 = bookMapper.selectList(qw9);
+        bookClass9.setBooks(bookList9);
+        bookClass9.setClassname("生活");
+        // 查找所有类型为11的图书信息
+        Book book10 = new Book();
+        book10.setBookType(11);
+        BookClass bookClass10 = new BookClass();
+        QueryWrapper<Book> qw10 = new QueryWrapper<>(book10);
+        List<Book> bookList10 = bookMapper.selectList(qw10);
+        bookClass10.setBooks(bookList10);
+        bookClass10.setClassname("科技");
+        List<BookClass> list = new ArrayList<>();
+        list.add(bookClass);
+        list.add(bookClass1);
+        list.add(bookClass2);
+        list.add(bookClass3);
+        list.add(bookClass4);
+        list.add(bookClass5);
+        list.add(bookClass6);
+        list.add(bookClass7);
+        list.add(bookClass8);
+        list.add(bookClass9);
+        list.add(bookClass10);
+        return list;
+    }
+
+
 }
 

@@ -20,6 +20,8 @@ import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
@@ -47,7 +49,10 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private HttpSession session;
+    private  HttpSession session;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
 //    @GetMapping("/userLogin/{email}/{password}")
 //    @ApiOperation("用于测试登录")
@@ -73,11 +78,11 @@ public class UserController {
 //        res.setToken(token);
 //        return res;
 //    }
-@GetMapping("/total/")
-@ApiOperation("获得用户总数")
-public int getTotalUser(){
-    return userService.list(null).size();
-}
+    @GetMapping("/total/")
+    @ApiOperation("获得用户总数")
+    public int getTotalUser(){
+        return userService.list(null).size();
+    }
 
     @PostMapping(value = "/userLogin")
     @ApiOperation("会员登录")
@@ -87,6 +92,10 @@ public int getTotalUser(){
         String email= v.getString("email");
         String password = v.getString("password");
         String verCode = v.getString("verCode");
+        //从redis中取出验证码
+        ValueOperations<String, String> operations = redisTemplate.opsForValue();
+        String LoginCode = operations.get("LoginCode");
+        System.out.println("是不是取到了验证码哦woc" + LoginCode);
         Result result = new Result();
         User user = userService.getByEmail(email);
         Subject subject = SecurityUtils.getSubject();
@@ -96,15 +105,14 @@ public int getTotalUser(){
         System.out.println("试着取一下邮箱" + usernamePasswordToken.getUsername());
         // 执行登录方法
         System.out.println("前端接收到的验证码：" + verCode);
-        System.out.println("看看验证码！" + session.getAttribute("VerifyCode"));
-        if (!session.getAttribute("VerifyCode").equals(verCode)){
+        if (!operations.get("LoginCode").equals(verCode)){
             result.setCode(404);
             result.setMsg("验证码错误");
             return result;
         }
         try {
             subject.login(usernamePasswordToken);
-            result.setCode(1);
+            result.setCode(0);
             result.setMsg("登录成功");
             result.setData(user);
             session.setAttribute("user", user);
@@ -121,6 +129,7 @@ public int getTotalUser(){
             return result;
         }
     }
+
 
     @PostMapping("/register")
     @ApiOperation("会员注册")
@@ -233,15 +242,19 @@ public int getTotalUser(){
 
     @GetMapping("/verCode")
     @ApiOperation("验证码")
-    public void verifyCode(HttpServletRequest request, HttpServletResponse response) {
+    public String verifyCode(HttpServletRequest request, HttpServletResponse response) {
         IVerifyCodeGen iVerifyCodeGen = new SimpleCharVerifyCodeGenImpl();
+        Result result = new Result();
         try {
             //设置长宽
             VerifyCode verifyCode = iVerifyCodeGen.generate(80, 28);
             String code = verifyCode.getCode();
             log.info(code);
-            //将VerifyCode绑定session
-            request.getSession().setAttribute("VerifyCode", code);
+            System.out.println("到底生成code没有哦" + code);
+            // 将code存进Redis
+            ValueOperations<String, String> operations = redisTemplate.opsForValue();
+            operations.set("LoginCode", code);
+            System.out.println("Redis中取一下验证码：" + operations.get("LoginCode"));
             //设置响应头
             response.setHeader("Pragma", "no-cache");
             //设置响应头
@@ -252,8 +265,11 @@ public int getTotalUser(){
             response.setContentType("image/jpeg");
             response.getOutputStream().write(verifyCode.getImgBytes());
             response.getOutputStream().flush();
+            return code;
         } catch (IOException e) {
+            String msg = "wrong";
             log.info("", e);
+            return msg;
         }
     }
 

@@ -62,13 +62,14 @@ public class LikeServiceImpl implements LikeService {
         ValueOperations<String, Integer> operations = redisTemplate.opsForValue();
         Set<String> keys = redisTemplate.keys("*");
         for (String key: keys
-             ) {
-            Long likeCount = (long)operations.get(key);
+        ) {
+            String likeCount = String.valueOf(operations.get(key));
             Comment comment = commentService.getById(key);
             if(comment != null){
-                comment.setLikeCount(likeCount);
+                comment.setLikeCount(Long.valueOf(likeCount));
                 commentService.updateById(comment);
             }
         }
     }
+
 }

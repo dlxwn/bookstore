@@ -1,6 +1,8 @@
 package com.ctgu.bookstore.controller;
 
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ctgu.bookstore.entity.Orderlist;
 import com.ctgu.bookstore.entity.Result;
@@ -86,7 +88,12 @@ public class OrderlistController {
 
     @PostMapping("/add")
     @ApiOperation("添加订单")
-    public Result addOrder(@RequestBody String orderlist ){
+    public Result addOrder(@RequestBody String json ){
+        System.out.println(json);
+        JSONObject v= JSONObject.parseObject(json);
+        System.out.println(v.getString("orderlist"));
+        JSONObject orderlistjson = JSONObject.parseObject(v.getString("orderlist"));
+        Orderlist orderlist = JSON.toJavaObject(orderlistjson,Orderlist.class);
         System.out.println(orderlist);
         //boolean save = orderlistService.save(orderlist);
         Result result = new Result();
